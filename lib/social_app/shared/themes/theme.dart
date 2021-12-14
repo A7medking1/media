@@ -31,6 +31,11 @@ ThemeData lightTheme() => ThemeData(
         fontSize: 20,
         color: Colors.black,
       ),
+      subtitle1: TextStyle(
+        fontSize: 15,
+        color: Colors.black,
+        height: 2.0,
+      )
     ));
 
 ThemeData darkTheme() => ThemeData(

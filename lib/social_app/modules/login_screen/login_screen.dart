@@ -2,15 +2,14 @@ import 'package:conditional_builder_null_safety/conditional_builder_null_safety.
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_styled_toast/flutter_styled_toast.dart';
-import 'package:media/social_app/layout/cubit/cubit.dart';
-import 'package:media/social_app/layout/cubit/states.dart';
+import 'package:media/social_app/layout/social_layout.dart';
 import 'package:media/social_app/modules/login_screen/cubit/cubit.dart';
 import 'package:media/social_app/modules/login_screen/cubit/states.dart';
 import 'package:media/social_app/modules/register_screen/register_screen.dart';
 import 'package:media/social_app/shared/component/components.dart';
 import 'package:media/social_app/shared/component/text_form.dart';
 import 'package:media/social_app/shared/constant.dart';
+import 'package:media/social_app/shared/network/cache_helper.dart';
 
 class SocialLoginScreen extends StatelessWidget {
   final _emailController = TextEditingController();
@@ -25,12 +24,22 @@ class SocialLoginScreen extends StatelessWidget {
       create: (BuildContext context) => SocialLoginCubit(),
       child: BlocConsumer<SocialLoginCubit, SocialLoginStates>(
         listener: (context, state) {
-          if (state is SocialLoginErrorState) {
+          if (state is SocialLoginErrorState)
+          {
             showToastState(
               text: state.error,
               state: ToastStates.error,
               context: context,
             );
+
+          }
+          if(state is SocialLoginSuccessState)
+          {
+            CacheHelper.saveData(key: 'uid', value: state.uId,).then((value)
+            {
+              navigatorAndFinish(context, const SocialLayOut());
+            });
+
           }
         },
         builder: (context, state) {

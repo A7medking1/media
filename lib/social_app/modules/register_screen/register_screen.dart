@@ -1,6 +1,7 @@
 import 'package:conditional_builder_null_safety/conditional_builder_null_safety.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:media/social_app/layout/social_layout.dart';
 import 'package:media/social_app/modules/register_screen/cubit/cubit.dart';
 import 'package:media/social_app/modules/register_screen/cubit/states.dart';
 import 'package:media/social_app/shared/component/components.dart';
@@ -22,7 +23,14 @@ class RegisterScreen extends StatelessWidget {
     return BlocProvider(
       create: (BuildContext context) => SocialRegisterCubit(),
       child: BlocConsumer<SocialRegisterCubit, SocialRegisterStates>(
-        listener: (context, state) {},
+        listener: (context, state) {
+          if (state is SocialCreateUserSuccessState) {
+            navigatorAndFinish(
+              context,
+              const SocialLayOut(),
+            );
+          }
+        },
         builder: (context, state) {
           SocialRegisterCubit cubit = SocialRegisterCubit.get(context);
           return Scaffold(
@@ -104,22 +112,21 @@ class RegisterScreen extends StatelessWidget {
                       ),
                     ),
                     ConditionalBuilder(
-                      condition: true,
-                      builder: (context) =>
-                          DefaultButton(
-                            title: 'Create',
-                            color: defaultColor,
-                            pressed: () {
-                              cubit.userRegister(
-                                  email: _emailController.text,
-                                  password: _passwordController.text,
-                                  phone: _phoneController.text,
-                                  name: _nameController.text);
-                            },
-                            shadowColor: Colors.green,
-                          ),
+                      condition: state is! SocialRegisterLoadingState,
+                      builder: (context) => DefaultButton(
+                        title: 'Create',
+                        color: defaultColor,
+                        pressed: () {
+                          cubit.userRegister(
+                              email: _emailController.text,
+                              password: _passwordController.text,
+                              phone: _phoneController.text,
+                              name: _nameController.text);
+                        },
+                        shadowColor: Colors.green,
+                      ),
                       fallback: (context) =>
-                      const Center(child: CircularProgressIndicator()),
+                          const Center(child: CircularProgressIndicator()),
                     ),
                   ],
                 ),

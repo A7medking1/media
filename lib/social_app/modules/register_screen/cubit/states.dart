@@ -2,13 +2,22 @@
 abstract class SocialRegisterStates {}
 
 class SocialRegisterInitialState extends SocialRegisterStates {}
-class ShopRegisterPassShowState extends SocialRegisterStates {}
-class ShopRegisterLoadingState extends SocialRegisterStates {}
-class ShopRegisterSuccessState extends SocialRegisterStates {}
-class ShopRegisterErrorState extends SocialRegisterStates
+class SocialRegisterPassShowState extends SocialRegisterStates {}
+class SocialRegisterLoadingState extends SocialRegisterStates {}
+class SocialRegisterSuccessState extends SocialRegisterStates {}
+class SocialRegisterErrorState extends SocialRegisterStates
 {
   final String error;
 
-  ShopRegisterErrorState(this.error);
+  SocialRegisterErrorState(this.error);
 }
 
+
+
+class SocialCreateUserSuccessState extends SocialRegisterStates {}
+class SocialCreateUserErrorState extends SocialRegisterStates
+{
+  final String error;
+
+  SocialCreateUserErrorState(this.error);
+}

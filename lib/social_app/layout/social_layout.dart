@@ -1,81 +1,86 @@
-// import 'package:flutter/material.dart';
-// import 'package:flutter_bloc/flutter_bloc.dart';
-// import 'package:salla/shop_app/layout/cubit/cubit.dart';
-// import 'package:salla/shop_app/layout/cubit/states.dart';
-// import 'package:salla/shop_app/moduls/drawer_screen/drawer_screen.dart';
-// import 'package:salla/shop_app/moduls/login_screen/login_screen.dart';
-// import 'package:salla/shop_app/shared/component/components.dart';
-// import 'package:salla/shop_app/shared/component/icon_broken.dart';
-// import 'package:salla/shop_app/shared/network/cache_helper.dart';
-//
-// class ShopLayOut extends StatelessWidget {
-//   const ShopLayOut({Key? key}) : super(key: key);
-//
-//   @override
-//   Widget build(BuildContext context) {
-//     return BlocConsumer<ShopAppCubit, ShopAppStates>(
-//       listener: (context, state) {},
-//       builder: (context, state) {
-//         ShopAppCubit cubit = ShopAppCubit.get(context);
-//         return Scaffold(
-//           appBar: AppBar(
-//             title: const Text(
-//               'Salla App',
-//             ),
-//             actions:
-//             [
-//               IconButton(
-//                 onPressed: () {
-//                   CacheHelper.removeData(key: 'token').then((value) {
-//                     if (value) {
-//                       navigatorAndFinish(
-//                         context,
-//                         ShopLoginScreen(),
-//                       );
-//                     }
-//                   });
-//                 },
-//                 icon: const Icon(
-//                   IconBroken.Chat,
-//                 ),
-//               ),
-//             ],
-//           ),
-//           body: cubit.screens[cubit.currentIndex],
-//           drawer: DrawerWidget(),
-//           bottomNavigationBar: BottomNavigationBar(
-//             currentIndex: cubit.currentIndex,
-//             onTap: (index) => cubit.changeIndex(index),
-//             items: const [
-//               BottomNavigationBarItem(
-//                 icon: Icon(
-//                   IconBroken.Home,
-//                 ),
-//                 label: 'Home',
-//               ),
-//               BottomNavigationBarItem(
-//                 icon: Icon(
-//                   IconBroken.Category,
-//                 ),
-//                 label: 'Category',
-//               ),
-//               BottomNavigationBarItem(
-//                 icon: Icon(
-//                   IconBroken.Heart,
-//                 ),
-//                 label: 'Favorite',
-//               ),
-//               BottomNavigationBarItem(
-//                 icon: Icon(
-//                   IconBroken.Buy,
-//                 ),
-//                 label: 'Cart',
-//               ),
-//             ],
-//           ),
-//         );
-//       },
-//     );
-//   }
-// }
-//
+import 'package:conditional_builder_null_safety/conditional_builder_null_safety.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:media/social_app/layout/cubit/cubit.dart';
+import 'package:media/social_app/layout/cubit/states.dart';
+import 'package:media/social_app/modules/new_posts/new_posts.dart';
+import 'package:media/social_app/shared/component/components.dart';
+import 'package:media/social_app/shared/component/icon_broken.dart';
+
+class SocialLayOut extends StatelessWidget {
+  const SocialLayOut({Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return BlocConsumer<AppCubit, AppStates>(
+      listener: (context, state)
+      {
+        if(state is AppBottomNavBarPostsState)
+        {
+          navigateTO(context, NewPostsScreen());
+        }
+      },
+      builder: (context, state) {
+        AppCubit cubit = AppCubit.get(context);
+        return Scaffold(
+          appBar: AppBar(
+            title: Text(
+              cubit.title[cubit.currentIndex],
+            ),
+            actions: [
+              IconButton(
+                onPressed: () {},
+                icon: const Icon(
+                  IconBroken.Notification,
+                ),
+              ),
+              IconButton(
+                onPressed: () {},
+                icon: const Icon(
+                  IconBroken.Search,
+                ),
+              ),
+            ],
+          ),
+          body: cubit.screens[cubit.currentIndex],
+          bottomNavigationBar: BottomNavigationBar(
+            onTap: (index) => cubit.changeIndex(index),
+            currentIndex: cubit.currentIndex,
+            items: const [
+              BottomNavigationBarItem(
+                icon: Icon(
+                  IconBroken.Home,
+                ),
+                label: 'Home',
+              ),
+              BottomNavigationBarItem(
+                icon: Icon(
+                  IconBroken.Chat,
+                ),
+                label: 'Chat',
+              ),
+              BottomNavigationBarItem(
+                icon: Icon(
+                  IconBroken.Paper_Upload,
+                ),
+                label: 'Posts',
+              ),
+              BottomNavigationBarItem(
+                icon: Icon(
+                  IconBroken.Location,
+                ),
+                label: 'Users',
+              ),
+              BottomNavigationBarItem(
+                icon: Icon(
+                  IconBroken.Setting,
+                ),
+                label: 'Setting',
+              ),
+            ],
+          ),
+        );
+      },
+    );
+  }
+}
