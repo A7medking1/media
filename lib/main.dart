@@ -16,26 +16,24 @@ void main() async {
   Bloc.observer = MyBlocObserver();
   await CacheHelper.init();
   // DioHelper.init();
-
   uId = CacheHelper.getData(key: 'uid');
-
+  debugPrint("this main uid => $uId");
   Widget widget;
 
   if (uId != null) {
-    widget = SocialLayOut();
+    widget = const SocialLayOut();
   } else {
     widget = SocialLoginScreen();
   }
-
   runApp(MyApp(
     startScreen: widget,
   ));
 }
 
 class MyApp extends StatelessWidget {
-  Widget? startScreen;
+  final Widget? startScreen;
 
-  MyApp({Key? key, required this.startScreen}) : super(key: key);
+  const MyApp({Key? key, required this.startScreen}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {

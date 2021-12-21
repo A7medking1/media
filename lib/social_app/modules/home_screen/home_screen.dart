@@ -39,7 +39,7 @@ class HomeScreen extends StatelessWidget {
             physics: const NeverScrollableScrollPhysics(),
             itemCount: 10,
             itemBuilder: (context, index) => const BuildPostItem(),
-            separatorBuilder: (context , index) => const SizedBox(
+            separatorBuilder: (context, index) => const SizedBox(
               height: 10,
             ),
           ),
@@ -60,6 +60,7 @@ class BuildPostItem extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Card(
+      elevation: 210.0,
       clipBehavior: Clip.antiAliasWithSaveLayer,
       margin: const EdgeInsets.symmetric(horizontal: 8.0),
       child: Padding(
@@ -112,7 +113,9 @@ class BuildPostItem extends StatelessWidget {
                 ),
                 IconButton(
                   onPressed: () {},
-                  icon: const Icon(Icons.more_horiz,),
+                  icon: const Icon(
+                    Icons.more_horiz,
+                  ),
                 ),
               ],
             ),
@@ -277,7 +280,7 @@ class BuildPostItem extends StatelessWidget {
           ],
         ),
       ),
-      elevation: 210.0,
+
     );
   }
 }

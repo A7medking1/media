@@ -1,11 +1,12 @@
-import 'package:conditional_builder_null_safety/conditional_builder_null_safety.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:media/social_app/layout/cubit/cubit.dart';
 import 'package:media/social_app/layout/cubit/states.dart';
+import 'package:media/social_app/modules/login_screen/login_screen.dart';
 import 'package:media/social_app/modules/new_posts/new_posts.dart';
 import 'package:media/social_app/shared/component/components.dart';
 import 'package:media/social_app/shared/component/icon_broken.dart';
+import 'package:media/social_app/shared/network/cache_helper.dart';
 
 class SocialLayOut extends StatelessWidget {
   const SocialLayOut({Key? key}) : super(key: key);
@@ -13,11 +14,9 @@ class SocialLayOut extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocConsumer<AppCubit, AppStates>(
-      listener: (context, state)
-      {
-        if(state is AppBottomNavBarPostsState)
-        {
-          navigateTO(context, NewPostsScreen());
+      listener: (context, state) {
+        if (state is AppBottomNavBarPostsState) {
+          navigateTO(context, const NewPostsScreen());
         }
       },
       builder: (context, state) {
@@ -29,7 +28,15 @@ class SocialLayOut extends StatelessWidget {
             ),
             actions: [
               IconButton(
-                onPressed: () {},
+                onPressed: () {
+                  cubit.signOut().then((value) {
+                    CacheHelper.removeData(key: 'uid').then((value) {
+                      if (value) {
+                        navigatorAndFinish(context, SocialLoginScreen());
+                      }
+                    });
+                  });
+                },
                 icon: const Icon(
                   IconBroken.Notification,
                 ),

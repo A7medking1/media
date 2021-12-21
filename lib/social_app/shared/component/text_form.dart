@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 class TextForm extends StatelessWidget {
-  TextForm({
+   const TextForm({Key? key,
     @required this.controller,
     @required this.textType,
     this.changed,
@@ -14,7 +14,7 @@ class TextForm extends StatelessWidget {
     this.pressed,
     this.onTap,
     this.isClick = true,
-  });
+  }) : super(key: key);
 
   final TextEditingController? controller;
   final TextInputType? textType;
@@ -41,8 +41,8 @@ class TextForm extends StatelessWidget {
       validator: validator,
       onFieldSubmitted: onField,
       decoration: InputDecoration(
-          border: OutlineInputBorder(
-            borderRadius: BorderRadius.circular(50),
+          border: const OutlineInputBorder(
+            // borderRadius: BorderRadius.circular(50),
           ),
           labelText: label,
           prefixIcon: Icon(prefix),

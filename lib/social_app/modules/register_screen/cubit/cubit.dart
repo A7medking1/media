@@ -4,6 +4,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:media/social_app/models/user_model.dart';
 import 'package:media/social_app/modules/register_screen/cubit/states.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:media/social_app/shared/constant.dart';
 
 class SocialRegisterCubit extends Cubit<SocialRegisterStates> {
   SocialRegisterCubit() : super(SocialRegisterInitialState());
@@ -25,10 +26,12 @@ class SocialRegisterCubit extends Cubit<SocialRegisterStates> {
       email: email,
       password: password,
     )
-        .then((value) {
-      print(value.user!.email);
-      print(value.user!.uid);
-
+        .then((value)
+    {
+      uId = value.user!.uid;
+      // print(value.user!.email);
+      // print(value.user!.uid);
+      debugPrint('this is register cubit  => $uId');
       createUser(
         email: email,
         phone: phone,
@@ -36,8 +39,6 @@ class SocialRegisterCubit extends Cubit<SocialRegisterStates> {
 
         uid: value.user!.uid,
       );
-
-
     }).catchError((error) {
       emit(SocialRegisterErrorState(error.toString()));
     });
@@ -66,7 +67,7 @@ class SocialRegisterCubit extends Cubit<SocialRegisterStates> {
           model.toMap(),
         )
         .then((value) {
-      emit(SocialCreateUserSuccessState());
+      emit(SocialCreateUserSuccessState(model.uid));
     }).catchError((error) {
       print(error.toString());
       emit(SocialCreateUserErrorState(error.toString()));
@@ -78,7 +79,8 @@ class SocialRegisterCubit extends Cubit<SocialRegisterStates> {
   bool isPassShow = true;
   IconData iconData = Icons.visibility;
 
-  void passShow() {
+  void passShow()
+  {
     isPassShow = !isPassShow;
     isPassShow ? iconData = Icons.visibility : iconData = Icons.visibility_off;
     emit(SocialRegisterPassShowState());

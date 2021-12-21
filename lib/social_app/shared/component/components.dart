@@ -1,6 +1,7 @@
-import 'package:carousel_slider/carousel_options.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_styled_toast/flutter_styled_toast.dart';
+import 'package:media/social_app/shared/component/icon_broken.dart';
+
 
 void navigateTO(context, Widget page) {
   Navigator.push(
@@ -28,25 +29,23 @@ validate(String value) {
   return null;
 }
 
-
-Widget myDivider() => Padding(
-      padding: const EdgeInsets.only(left: 20),
-      child: Container(
-        height: 1,
-        width: double.infinity,
-        color: Colors.grey,
-      ),
-    );
-
+// Widget myDivider() => Padding(
+//       padding: const EdgeInsets.only(left: 20),
+//       child: Container(
+//         height: 1,
+//         width: double.infinity,
+//         color: Colors.grey,
+//       ),
+//     );
 
 class DefaultTextButton extends StatelessWidget {
-  const DefaultTextButton(
-      {Key? key,
-      required this.title,
-      required this.pressed,
-      required this.fontSize,
-      this.color})
-      : super(key: key);
+  const DefaultTextButton({
+    Key? key,
+    required this.title,
+    required this.pressed,
+    this.color = Colors.deepOrange,
+    this.fontSize = 15,
+  }) : super(key: key);
 
   final String? title;
   final void Function() pressed;
@@ -78,7 +77,7 @@ class DefaultButton extends StatelessWidget {
   const DefaultButton({
     Key? key,
     required this.title,
-    required this.color,
+     this.color = Colors.deepOrange,
     required this.pressed,
     this.shadowColor,
   }) : super(key: key);
@@ -86,7 +85,7 @@ class DefaultButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Material(
-      elevation: 20.0,
+      elevation: 0.0,
       shadowColor: shadowColor,
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(25)),
       child: SizedBox(
@@ -96,7 +95,7 @@ class DefaultButton extends StatelessWidget {
           height: 50,
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(
-              40,
+              8,
             ),
           ),
           color: color,
@@ -113,21 +112,20 @@ class DefaultButton extends StatelessWidget {
   }
 }
 
-CarouselOptions carouselOptions() {
-  return CarouselOptions(
-    height: 400,
-    viewportFraction: 1,
-    enableInfiniteScroll: true,
-    reverse: false,
-    autoPlay: true,
-    autoPlayInterval: const Duration(seconds: 5),
-    autoPlayAnimationDuration: const Duration(seconds: 1),
-    autoPlayCurve: Curves.fastOutSlowIn,
-    enlargeCenterPage: true,
-    scrollDirection: Axis.horizontal,
-  );
-}
-
+// CarouselOptions carouselOptions() {
+//   return CarouselOptions(
+//     height: 400,
+//     viewportFraction: 1,
+//     enableInfiniteScroll: true,
+//     reverse: false,
+//     autoPlay: true,
+//     autoPlayInterval: const Duration(seconds: 5),
+//     autoPlayAnimationDuration: const Duration(seconds: 1),
+//     autoPlayCurve: Curves.fastOutSlowIn,
+//     enlargeCenterPage: true,
+//     scrollDirection: Axis.horizontal,
+//   );
+// }
 
 ToastFuture showToastState({
   required String text,
@@ -147,7 +145,7 @@ ToastFuture showToastState({
   );
 }
 
-enum ToastStates {success , error , warning}
+enum ToastStates { success, error, warning }
 
 Color chooseToastColor(ToastStates state) {
   Color color;
@@ -166,5 +164,22 @@ Color chooseToastColor(ToastStates state) {
   return color;
 }
 
-
-
+AppBar defaultAppBar({
+  required BuildContext context,
+  String? title,
+  List<Widget>? actions,
+}) {
+  return AppBar(
+    actions: actions,
+    title: Text(
+      title.toString(),
+    ),
+    titleSpacing: 0.0,
+    leading: IconButton(
+      icon: const Icon(
+        IconBroken.Arrow___Left_2,
+      ),
+      onPressed: () => Navigator.pop(context),
+    ),
+  );
+}

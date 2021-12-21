@@ -35,7 +35,7 @@ static Future<bool> saveData({
 // ****************************
 
 
- static dynamic removeData({
+ static Future<bool> removeData({
    required dynamic key ,
  }) async
  {
